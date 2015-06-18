@@ -1,0 +1,21 @@
+# OSX
+#
+.DS_Store
+# OSX
+#
+.DS_Store
+
+# Xcode
+#
+build/
+xcuserdata
+*.xccheckout
+*.moved-aside
+DerivedData
+*.hmap
+*.ipa
+*.xcuserstate
+
+# App specific
+db/CID10CSV.zip
+Pods/

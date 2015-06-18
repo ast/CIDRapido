@@ -1,0 +1,51 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "492D4A39BC26A693EE11DD9D3E0E989A64D27FC8",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "89AB8B7AC69D45E8D6D9FF946DB3C994C65BB513" : 0,
+    "04101981B66E318109934C9516F88D824BB96459" : 0,
+    "492D4A39BC26A693EE11DD9D3E0E989A64D27FC8" : 0,
+    "9EDF01A7804EB52CCFC540C61D3368942DB9FDFD" : 0,
+    "9E1ECC80773D1F4F22D03CB4DEA298B3CB57FAF5" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "08B3DB09-4D6B-4F21-A72A-DF361913DDCF",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "89AB8B7AC69D45E8D6D9FF946DB3C994C65BB513" : "CID-10\/CHCSVParser",
+    "04101981B66E318109934C9516F88D824BB96459" : "CID-10fmdb",
+    "492D4A39BC26A693EE11DD9D3E0E989A64D27FC8" : "CID-10",
+    "9EDF01A7804EB52CCFC540C61D3368942DB9FDFD" : "CID-10UIColor-Hex-Swift",
+    "9E1ECC80773D1F4F22D03CB4DEA298B3CB57FAF5" : "CID-10SVProgressHUD"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "CID-10",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 203,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "CID-10.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/ccgus\/fmdb.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "04101981B66E318109934C9516F88D824BB96459"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:ast\/CID-10.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "492D4A39BC26A693EE11DD9D3E0E989A64D27FC8"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/davedelong\/CHCSVParser.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "89AB8B7AC69D45E8D6D9FF946DB3C994C65BB513"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/TransitApp\/SVProgressHUD.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "9E1ECC80773D1F4F22D03CB4DEA298B3CB57FAF5"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/yeahdongcn\/UIColor-Hex-Swift.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "9EDF01A7804EB52CCFC540C61D3368942DB9FDFD"
+    }
+  ]
+}
