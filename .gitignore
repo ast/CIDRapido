@@ -19,3 +19,4 @@ DerivedData
 # App specific
 db/CID10CSV.zip
 Pods/
+db/*.db
