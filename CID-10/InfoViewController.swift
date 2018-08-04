@@ -8,13 +8,36 @@
 
 import UIKit
 import WebKit
-import FBSDKShareKit
+import Social
+import MessageUI
+import CustomViews
 
 private let kScreenName = "Info"
 
-class InfoViewController: UIViewController, WKNavigationDelegate {
+class InfoViewController: UIViewController, WKNavigationDelegate, MFMessageComposeViewControllerDelegate {
 
     private var webView: WKWebView?
+    
+    func shareButton(fontAwesome: FontAwesome) -> FABarButtonItem {
+        let item = FABarButtonItem(fontAwesome: fontAwesome)
+        item.target = self
+        item.action = Selector("shareButtonClicked:")
+        return item
+    }
+    
+    lazy var hasEmail : Bool = {
+        return MFMailComposeViewController.canSendMail()
+    }()
+    
+    lazy var hasTwitter : Bool = {
+        return SLComposeViewController.isAvailableForServiceType(SLServiceTypeTwitter)
+    }()
+    
+    /*
+    lazy var hasFacebook : Bool = {
+        return SLComposeViewController.isAvailableForServiceType(SLServiceTypeFacebook)
+    }()
+    */
     
     override func loadView() {
         webView = WKWebView()
@@ -65,27 +88,62 @@ class InfoViewController: UIViewController, WKNavigationDelegate {
         return label
     }()
     
-    var likeItem : UIBarButtonItem {
-        //let like = FBLikeControl()
+    func messageComposeViewController(controller: MFMessageComposeViewController, didFinishWithResult result: MessageComposeResult) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func shareButtonClicked(sender: FABarButtonItem) {
         
-        let like = FBSDKLikeButton()
-        like.objectID = "http://cidrapido.com"
-        like.sizeToFit()
-        let likeItem = UIBarButtonItem(customView: like)
-        return likeItem
+        var controller: UIViewController? = nil
+        
+        let shareSubject = "CIDRapdio"
+        let shareText = "\nhttp://appstore.com/cidrapido"
+        
+        switch sender.fontAwesome! {
+            
+        case .Email:
+            let mc = MFMessageComposeViewController()
+            mc.subject = shareSubject
+            mc.body = shareText
+            mc.messageComposeDelegate = self
+            controller = mc
+        /*
+        case .Facebook:
+            let fbc = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
+            fbc.setInitialText(shareText)
+            controller = fbc
+        */
+        case .Twitter:
+            let twc = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
+            twc.setInitialText(shareText)
+            controller = twc
+            
+        default:
+            assertionFailure("Unknown social network.")
+        }
+        
+        if let controller = controller {
+            presentViewController(controller, animated: true, completion: nil)
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.rightBarButtonItem = likeItem
+        let url = NSBundle.mainBundle().URLForResource("index", withExtension: "html", subdirectory: "html")!
+        let baseURL = url.URLByDeletingLastPathComponent!
+        
+        webView!.loadFileURL(url, allowingReadAccessToURL: baseURL)
         
         navigationItem.titleView = infoLabel
         
-        let url = NSBundle.mainBundle().URLForResource("index", withExtension: "html", subdirectory: "html")
+        var items = [UIBarButtonItem]()
         
-        webView!.loadRequest(NSURLRequest(URL: url!))
+        hasEmail ? items.append(shareButton(.Email)) : ()
+        hasTwitter ? items.append(shareButton(.Twitter)) : ()
+        //hasFacebook ? items.append(shareButton(.Facebook)) : ()
         
+        navigationItem.rightBarButtonItems = items
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -104,7 +162,6 @@ class InfoViewController: UIViewController, WKNavigationDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 
     /*
     // MARK: - Navigation

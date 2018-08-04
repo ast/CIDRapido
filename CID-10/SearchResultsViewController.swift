@@ -13,11 +13,12 @@ import SVProgressHUD
 private let kEstimatedRowHeight : CGFloat = 74.0
 private let kScreenName = "Search"
 
-class SearchResultsViewController: UITableViewController, UISearchResultsUpdating {
+class SearchResultsViewController: UITableViewController, UISearchResultsUpdating, UISearchBarDelegate {
     
     var searchController : UISearchController?
     
     private var searchResults : [Row]?
+    
     private var hasResults : Bool {
         get {
             if let searchResults = searchResults {
@@ -26,18 +27,24 @@ class SearchResultsViewController: UITableViewController, UISearchResultsUpdatin
             return false
         }
     }
-        
-    // Dismiss ke   yboard when scrolling
+    
+    private var searchScope: SearchScope {
+        get {
+            let selectedIndex = self.searchController!.searchBar.selectedScopeButtonIndex
+            return SearchScope(rawValue: selectedIndex)!
+        }
+    }
+    
+    // Dismiss keyboard when scrolling
     override func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-        switch searchController?.searchBar {
-        case .Some(let searchBar) where searchBar.isFirstResponder():
+        
+        if case .Some(let searchBar) = searchController?.searchBar where searchBar.isFirstResponder() {
             searchBar.resignFirstResponder()
-        default: break;
         }
     }
     
     private func showHUD(message : String) {
-        SVProgressHUD.showInfoWithStatus(message, maskType: SVProgressHUDMaskType.None)
+        SVProgressHUD.showInfoWithStatus(message)
     }
     
     override func viewDidLoad() {
@@ -65,30 +72,31 @@ class SearchResultsViewController: UITableViewController, UISearchResultsUpdatin
         // Dispose of any resources that can be recreated.
     }
 
+    // MARK: - UISearchBarDelegate
+    func searchBar(searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        updateSearchResultsForSearchController(self.searchController!)
+    }
+    
     // MARK: - UISearchResultsUpdating
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         
-        guard let query = searchController.searchBar.text else {
-            return
+        if let query = searchController.searchBar.text,
+               scope = SearchScope(rawValue: searchController.searchBar.selectedScopeButtonIndex) {
+                
+                Database.sharedInstance.find(query, scope: scope, completion: { rows in
+                    self.searchResults = rows
+                    // Always reload, even if empty. This is need to handle the "No results" display.
+                    self.tableView.reloadData()
+                })
         }
-        
-        Database.sharedInstance.find(query, completion: { rows in
-            self.searchResults = rows
-            // Always reload, even if empty. This is need to handle the "No results" display.
-            self.tableView.reloadData()
-        })
     }
     
     // MARK: - Table view data source
-
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Potentially incomplete method implementation.
-        // Return the number of sections.
         return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
         if let searchResults = self.searchResults {
             return searchResults.count > 0 ? searchResults.count : 1
         }
@@ -97,7 +105,6 @@ class SearchResultsViewController: UITableViewController, UISearchResultsUpdatin
     }
     
     func rowForIndexPath(indexPath: NSIndexPath) -> Row? {
-        
         if let searchResults = self.searchResults {
             return searchResults[indexPath.row]
         }
@@ -109,20 +116,24 @@ class SearchResultsViewController: UITableViewController, UISearchResultsUpdatin
         
         if hasResults {
             
-            let cell = tableView.dequeueReusableCellWithIdentifier("rowCell", forIndexPath: indexPath) as! RowTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("rowCell", forIndexPath: indexPath) as! RowCell
             
-            switch rowForIndexPath(indexPath) {
-                
-            case .Some(let row):
+            // Get row
+            if let row = rowForIndexPath(indexPath) {
                 cell.codeLabel.attributedText = row.attributedCode
                 cell.descLabel.attributedText = row.attributedDesc
-            case .None: break;
+            }
+            
+            // English codes are longer
+            switch searchScope {
+            case .Portuguse: cell.codeLabelWidth = 60
+            case .English: cell.codeLabelWidth = 80
             }
 
-            //cell.layoutIfNeeded()
             return cell
             
         } else {
+            
             // No results cell
             let cell = tableView.dequeueReusableCellWithIdentifier("noResultsCell", forIndexPath: indexPath) as UITableViewCell
             
@@ -138,20 +149,23 @@ class SearchResultsViewController: UITableViewController, UISearchResultsUpdatin
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-
-        if let row = rowForIndexPath(indexPath) {
+        
+        if let row = rowForIndexPath(indexPath),
+            searchController = searchController {
             
-            if let searchController = searchController {
-                let prefixIndex = advance(row.code.startIndex, row.code.characters.count - 1)
-                let prefix = row.code.substringToIndex(prefixIndex)
+            let code = row.attributedCode.string
+            
+            let prefixIndex = code.startIndex.advancedBy(code.characters.count - 1)
+            //let prefixIndex = advance(code.startIndex, code.characters.count - 1)
                 
-                // Set search text and show HUD if not equal
-                if searchController.searchBar.text != prefix {
-                    searchController.searchBar.text = prefix
-                    showHUD(prefix)
-                }
-                
+            let prefix = code.substringToIndex(prefixIndex)
+            
+            // Set search text and show HUD if not equal
+            if searchController.searchBar.text != prefix {
+                searchController.searchBar.text = prefix
+                showHUD(prefix)
             }
+
         }
     }
     
@@ -172,15 +186,5 @@ class SearchResultsViewController: UITableViewController, UISearchResultsUpdatin
         default: break
         }
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

@@ -11,10 +11,11 @@ import Foundation
 internal extension Array {
     
     func partition (n: Int) -> [Array] {
-        
+
         var res = [Array]()
         
-        for i in stride(from: 0, through: count - 1, by: n) {
+        for i in 0.stride(through: count - 1, by: n) {
+        
             let a = Array(self[i..<(i+n)])
             res.append(a)
         }

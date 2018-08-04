@@ -45,25 +45,16 @@ class InitialTableViewController: BrowseTableViewController {
         
         searchController = UISearchController(searchResultsController: searchResultsController)
         searchController!.searchResultsUpdater = searchResultsController
-        searchController!.searchBar.sizeToFit()
-        searchController!.searchBar.translatesAutoresizingMaskIntoConstraints = false
+        searchController!.searchBar.scopeButtonTitles = [SearchScope.Portuguse.description, SearchScope.English.description]
         
-        searchController!.searchBar.scopeButtonTitles = ["Português", "Inglês"]
-        
-        // Colors
-        searchController!.searchBar.tintColor = UIColor.hospitalGreen()
         // Delegate
+        searchController!.searchBar.delegate = searchResultsController
         searchResultsController.searchController = searchController
+
         // Add to tableview
         tableView.tableHeaderView = searchController!.searchBar
-        
         // Title label
         navigationItem.titleView = titleLabel
-        
-        // Progress HUD Setup
-        SVProgressHUD.setBackgroundColor(UIColor.lightHospitalGreen())
-        SVProgressHUD.setForegroundColor(UIColor.whiteColor())
-        SVProgressHUD.setInfoImage(nil)
     }
 
     override func didReceiveMemoryWarning() {

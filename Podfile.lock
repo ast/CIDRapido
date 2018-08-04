@@ -1,47 +1,29 @@
 PODS:
-  - Bolts (1.2.0):
-    - Bolts/AppLinks (= 1.2.0)
-    - Bolts/Tasks (= 1.2.0)
-  - Bolts/AppLinks (1.2.0):
-    - Bolts/Tasks
-  - Bolts/Tasks (1.2.0)
-  - FBSDKCoreKit (4.2.0):
-    - Bolts (~> 1.1)
-    - FBSDKCoreKit/arc (= 4.2.0)
-    - FBSDKCoreKit/no-arc (= 4.2.0)
-  - FBSDKCoreKit/arc (4.2.0):
-    - Bolts (~> 1.1)
-  - FBSDKCoreKit/no-arc (4.2.0):
-    - Bolts (~> 1.1)
-    - FBSDKCoreKit/arc
-  - FBSDKShareKit (4.2.0):
-    - FBSDKCoreKit
   - FMDB/common (2.5)
   - FMDB/standalone/FTS (2.5):
     - FMDB/common
     - sqlite3/unicode61
-  - GoogleAnalytics (3.12.0)
-  - sqlite3/common (3.8.10.2)
-  - sqlite3/fts (3.8.10.2):
+  - GoogleAnalytics (3.13.0)
+  - iRate (1.11.4)
+  - sqlite3/common (3.8.11.1)
+  - sqlite3/fts (3.8.11.1):
     - sqlite3/common
-  - sqlite3/unicode61 (3.8.10.2):
+  - sqlite3/unicode61 (3.8.11.1):
     - sqlite3/common
     - sqlite3/fts
   - SVProgressHUD (HEAD based on 1.1.3)
 
 DEPENDENCIES:
-  - FBSDKShareKit
   - FMDB/standalone/FTS
   - GoogleAnalytics
+  - iRate
   - SVProgressHUD (HEAD)
 
 SPEC CHECKSUMS:
-  Bolts: d176cb1e0012175589e389a9db49b85e27787576
-  FBSDKCoreKit: 84b3616a361801f190e43a9909caead7bb6087c7
-  FBSDKShareKit: 931746fdf8fb95efd6e12310ec14b2b3295e2aec
   FMDB: 96e8f1bcc1329e269330f99770ad4285d9003e52
-  GoogleAnalytics: ef2e0b800ef3c1e62688cdfc959e0d3132bc246c
-  sqlite3: 5e6797834b321b0926250b89315b8516ce1c58f6
+  GoogleAnalytics: fcf1f1cad57ae1a9a53520018f0f680ceeeb8b49
+  iRate: 599ed07c854e0695f3c605d1b2a64c67d912acb7
+  sqlite3: 73d6ec33f24f74ceb91df8f1b6e1809251f0f580
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
 
-COCOAPODS: 0.37.2
+COCOAPODS: 0.38.2

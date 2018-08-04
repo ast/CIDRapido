@@ -6,9 +6,9 @@ target 'CID-10' do
     platform :ios, '8.0'
 
     pod 'FMDB/standalone/FTS', :inhibit_warnings => true
-    pod 'FBSDKShareKit'
     pod 'GoogleAnalytics'
     pod 'SVProgressHUD', :head
+    pod 'iRate'
 end
 
 target 'builddb' do

@@ -13,7 +13,7 @@ private let kEstimatedRowHeight : CGFloat = 74.0
 class BrowseTableViewController: UITableViewController {
 
     var parent : BrowseRow? // Parent?
-    var rows : Array<BrowseRow>?
+    var rows : [BrowseRow]?
     
     var screenName : String?
     
@@ -186,11 +186,6 @@ class BrowseTableViewController: UITableViewController {
         }
     }
 
-    /*
-    override func shouldPerformSegueWithIdentifier(identifier: String?, sender: AnyObject?) -> Bool {
-        return true
-    }*/
-    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         

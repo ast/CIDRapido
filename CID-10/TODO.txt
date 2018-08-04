@@ -1,10 +1,5 @@
 # Ideas
 
-
-* Longtouch copy
+* Please rate
 * English
-* Favorites
-* Upload v1.3
-
-* Turn off verbose analytics on release
-* Pull submodules updates
+* Share

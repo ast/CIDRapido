@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import SVProgressHUD
+import CustomViews
+import iRate
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -14,11 +17,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var tracker : GAITracker?
     
+    override class func initialize() -> Void {
+        //set the bundle ID. normally you wouldn't need to do this
+        //as it is picked up automatically from your Info.plist file
+        //but we want to test with an app that's actually on the store
+        iRate.sharedInstance().applicationBundleID = "com.cidrapido.cidrapido"
+        iRate.sharedInstance().onlyPromptIfLatestVersion = true
+        iRate.sharedInstance().daysUntilPrompt = 5
+        iRate.sharedInstance().usesUntilPrompt = 15
+        
+        //enable preview mode
+        //iRate.sharedInstance().previewMode = true
+    }
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        // Apperency
+        // Apperence
         UINavigationBar.appearance().barTintColor = UIColor.hospitalGreen()
+        UISearchBar.appearance().tintColor = UIColor.hospitalGreen()
         
+        FABarButtonItem.appearance().tintColor = UIColor.whiteColor()
+        
+        // Progress HUD Setup
+        SVProgressHUD.setInfoImage(nil)
+
         // Override point for customization after application launch.
         // Google Analytics
         GAI.sharedInstance().trackUncaughtExceptions = true
